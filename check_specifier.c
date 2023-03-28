@@ -10,7 +10,7 @@
 int (*check_specifier (char *format))(va_list)
 {
 
-	fun_t my_array[3] = {
+	fun_t my_array[4] = {
 		{'c', print_char},
 		{'s', print_string},
 		{'%', print_percent},
