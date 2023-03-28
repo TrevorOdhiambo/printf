@@ -29,9 +29,24 @@ typedef struct signs
 
 int _strlen(char *s);
 int _printf(const char *format, ...);
+
+int spIndex(char ch, struct sp_char *p);
+
+int signIndex(char ch, struct signs *p);
+
 int _putchar(char sp_ch);
+
+int _putstr(char *str, int len);
+
+void _putInt(unsigned int num, int *pCount);
+
 int print_str(va_list pa, int *pCount);
+
 int print_ch(va_list pa, int *pCount);
+
 int print_int(va_list pa, int *pCount);
 
+int print_bi(va_list pa, int *pCount);
+
+int print_rev(va_list pa, int *pCount);
 #endif

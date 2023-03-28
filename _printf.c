@@ -63,7 +63,8 @@ int _printf(const char *format, ...)
 	int i, count = 0;
 	int *pCount = &count;
 	spChar type[] = {
-		{'s', print_str}, {'c', print_ch}, {'\0', NULL}};
+		{'s', print_str}, {'c', print_ch}, {'d', print_int},
+		{'i', print_int}, {'b', print_bi}, {'\0', NULL}};
 
 	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
 		return (-1);
