@@ -27,7 +27,7 @@ int _printf(const char *format, ...)
 
 	va_start(args, format);
 
-	num_of_characters = handler(format,args);
+	num_of_characters = check_specifier(format,args);
 
 	_putchar(-1);
 	va_end(args);

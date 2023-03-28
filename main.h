@@ -13,22 +13,21 @@ int (*check_specifier (char *))(va_list);
 /* utils.c */
 int _strlen(const char *);
 
-/* handler.c */
-int handler(const char *, va_list);
+/* check_specifier.c */
+int check_specifier(const char *, va_list);
 
 
 /* _putchar.c */
 int _putchar(char);
 
-
 /**
- * strct func - structure to handle specifier for printing
- * @t: parameter to compare charecters
- * @f: function pointer to handle printing
- */
-
-typedef struct func
+ * struct _format - Typedef struct
+ *
+ * @type: Format
+ * @f: The function associated
+ **/
+typedef struct _format
 {
-        int (*f)(va_list);
-        char *t;
-} fun_t;
+	char type;
+	int (*f)(va_list);
+} format;
