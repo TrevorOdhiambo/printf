@@ -1,35 +1,37 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <stdarg.h> /* for varidic funs */
+#include <unistd.h>/* for write fun  */
+#include <stdlib.h>
 #include <stdio.h>
-#include <unistd.h>
-#include <stdarg.h>
-
-
-/* printf.c */
-int _printf(const char *, ...);
-int (*check_specifier (char *))(va_list);
-
-/* utils.c */
-int _strlen(const char *);
-
-/* check_specifier.c */
-int check_specifier(const char *, va_list);
-int percent_handler(const char *, va_list, int *);
-
-
-/* _putchar.c */
-int _putchar(char);
-int buffer(char);
+/**
+* struct sp_char - sturct for the special character
+*@ch: symbole of the speacial character
+*@fun: pointer to fun to print the argurment
+*/
+typedef struct sp_char
+{
+	char ch;
+	int (*fun)(va_list, int *);
+} spChar;
 
 /**
- * struct _format - Typedef struct
- *
- * @type: Format
- * @f: The function associated
- **/
-typedef struct _format
+*struct signs - sturct for the special character
+*@ch: symbole of the signs
+*@fun: pointer to fun to print sign
+*/
+typedef struct signs
 {
-	char type;
-	int (*f)(va_list);
-} format;
+	char ch;
+	void (*fun)(int, char, int, va_list, int *);
+} sign;
+
+int _strlen(char *s);
+int _printf(const char *format, ...);
+int _putchar(char sp_ch);
+int print_str(va_list pa, int *pCount);
+int print_ch(va_list pa, int *pCount);
+int print_int(va_list pa, int *pCount);
+
+#endif

@@ -1,36 +1,94 @@
 #include "main.h"
+/**
+*call_sp - fun that get the fun and call it and check
+*for signs
+*@format: the str format
+*@i: pointer to the index of our format
+*@p: pointer to out struct
+*@pCount: pointer to our counter
+*@pa:pointer to our arguments
+*/
+void call_sp(const char *format, int *i, struct sp_char *p,
+int *pCount, va_list pa)
+{
+	int j, k = 3;
+	va_list ap; /* to copy the pa */
+	int index = *i;
+	int flagg = 0;
+	sign flag[] = {{'+', postive_sign}, {' ', space_sign}, {'#', window_sign},
+		{'\0', NULL}};
+
+	va_copy(ap, pa); /* copy the list of the arguments */
+	while (signIndex(format[index], flag) != -1)
+	{
+		for (k = 0; flag[k].ch != '\0'; k++)/* if there are flags */
+		{
+			if (format[index] == flag[k].ch)
+			{
+				if (format[index] == '+' && flagg < 2)
+					flagg = 1;
+				else if (format[index] == '#')
+					flagg = 2;
+				index++;
+				break;
+			}
+		}
+	}
+	j = spIndex(format[index], p);/* get the index of the sp */
+	if (j != -1) /* make sure it match */
+	{
+		if (flag[k].ch != '\0')
+			flag[k].fun(flagg, flag[k].ch, j, ap, pCount);/* print flag */
+		p[j].fun(pa, pCount); /*print the argument  */
+		*i = index;
+	}
+	else
+	{
+		_putchar('%');
+		(*i)--;
+		*pCount += 1;
+		return;
+	}
+}
+
 
 /**
- * _printf - Is the main function that will print a string in formatted order
- * @format: paramater valua that will accept strings
- * @...: parameter value that will accept an undisclosed number of parameters
- *
- * Return : The number of charaters printed
- */
-
+*_printf - fun that do same as printf
+*@format: the string format
+*Return: num of charchter printed
+*/
 int _printf(const char *format, ...)
 {
-	int num_of_characters;
-	
-	va_list args;
+	va_list pa; /* points to the arguments list */
+	int i, count = 0;
+	int *pCount = &count;
+	spChar type[] = {
+		{'s', print_str}, {'c', print_ch}, {'\0', NULL}};
 
-	/* check if format is null and stop the program */
-	if ( format == NULL)
+	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
 		return (-1);
 
+	va_start(pa, format);
+	for (i = 0; format[i] != '\0'; i++)
+	{
+		if (format[i] != '%')
+		{
+			_putchar(format[i]); /* print the char */
+			*pCount += 1;
+		}
+		else if (format[i] == '%' && format[i + 1] != '%')
+		{
+			i++;/* get the char after the % */
+			call_sp(format, &i, type, pCount, pa);
 
-	/* check if format has value, count the number of characters, print the number of char printed */
-	num_of_characters = _strlen(format);
-
-	if (num_of_characters <= 0)
-		return (0);
-
-	va_start(args, format);
-
-	num_of_characters = check_specifier(format,args);
-
-	_putchar(-1);
-	va_end(args);
-
-	return (num_of_characters);
+		}
+		else if (format[i] == '%' && format[i + 1] == '%')
+		{
+			i++;
+			_putchar(format[i]);
+			*pCount += 1;
+		}
+	}
+	va_end(pa);
+	return (count);
 }
