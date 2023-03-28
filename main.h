@@ -10,6 +10,16 @@
 int _printf(const char *, ...);
 int (*check_specifier (char *))(va_list);
 
+/* utils.c */
+int _strlen(const char *);
+
+/* handler.c */
+int handler(const char *, va_list);
+
+
+/* _putchar.c */
+int _putchar(char);
+
 
 /**
  * strct func - structure to handle specifier for printing
@@ -19,8 +29,6 @@ int (*check_specifier (char *))(va_list);
 
 typedef struct func
 {
-	int (*f)(va_list);
-	char *t;
+        int (*f)(va_list);
+        char *t;
 } fun_t;
-
-#endif 

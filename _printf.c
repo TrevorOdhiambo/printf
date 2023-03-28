@@ -1,4 +1,4 @@
-#include "main,h"
+#include "main.h"
 
 /**
  * _printf - Is the main function that will print a string in formatted order
@@ -10,29 +10,27 @@
 
 int _printf(const char *format, ...)
 {
-	int i = 0;
-	int count = 0;
-	int value = 0;
-	va_list arg;
-
-	va_start(arg, format)
+	int num_of_characters;
+	
+	va_list args;
 
 	/* check if format is null and stop the program */
 	if ( format == NULL)
 		return (-1);
 
-	/* check if format has value, count the number of characters, print the number of char printed */
-	while (format[i])
-		if (format[i] != '%')
-	{
-		value = write(1; &format[i]; 1);
-		count = count + value;
-		i++;
-		continue;
-	}
-	if (format[i] == '%')
-	{
 
-	}
-	return (count)
+	/* check if format has value, count the number of characters, print the number of char printed */
+	num_of_characters = _strlen(format);
+
+	if (num_of_characters <= 0)
+		return (0);
+
+	va_start(args, format);
+
+	num_of_characters = handler(format,args);
+
+	_putchar(-1);
+	va_end(args);
+
+	return (num_of_characters);
 }
