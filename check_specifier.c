@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * handler - Format controller
+ * check_specifier - Format controller
  * @str: String format
  * @list: List of arguments
  *

@@ -15,10 +15,12 @@ int _strlen(const char *);
 
 /* check_specifier.c */
 int check_specifier(const char *, va_list);
+int percent_handler(const char *, va_list, int *);
 
 
 /* _putchar.c */
 int _putchar(char);
+int buffer(char);
 
 /**
  * struct _format - Typedef struct
