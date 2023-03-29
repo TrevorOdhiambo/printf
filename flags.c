@@ -1,52 +1,34 @@
 #include "main.h"
 
 /**
-*call_sp - fun that get the fun and call it and check
-*for signs
-*@format: the str format
-*@i: pointer to the index of our format
-*@p: pointer to out struct
-*@pCount: pointer to our counter
-*@pa:pointer to our arguments
-*/
-void call_sp(const char *format, int *i, struct sp_char *p,int *pCount, va_list pa)
+ * get_flags - Calculates active flags
+ * @format: Formatted string in which to print the arguments
+ * @i: take a parameter.
+ * Return: Flags:
+ */
+int get_flags(const char *format, int *i)
 {
-        int j, k = 3;
-        va_list ap; /* to copy the pa */
-        int index = *i;
-        int flagg = 0;
-        sign flag[] = {{'+', postive_sign}, {' ', space_sign}, {'#', window_sign},
-                {'\0', NULL}};
+	/* - + 0 # ' ' */
+	/* 1 2 4 8  16 */
+	int j, curr_i;
+	int flags = 0;
+	const char FLAGS_CH[] = {'-', '+', '0', '#', ' ', '\0'};
+	const int FLAGS_ARR[] = {F_MINUS, F_PLUS, F_ZERO, F_HASH, F_SPACE, 0};
 
-        va_copy(ap, pa); /* copy the list of the arguments */
-        while (signIndex(format[index], flag) != -1)
-        {
-                for (k = 0; flag[k].ch != '\0'; k++)/* if there are flags */
-                {
-                        if (format[index] == flag[k].ch)
-                        {
-                                if (format[index] == '+' && flagg < 2)
-                                        flagg = 1;
-                                else if (format[index] == '#')
-                                        flagg = 2;
-                                index++;
-                                break;
-                        }
-                }
-        }
-        j = spIndex(format[index], p);/* get the index of the sp */
-        if (j != -1) /* make sure it match */
-        {
-                if (flag[k].ch != '\0')
-                        flag[k].fun(flagg, flag[k].ch, j, ap, pCount);/* print flag */
-                p[j].fun(pa, pCount); /*print the argument  */
-                *i = index;
-        }
-        else
-        {
-                _putchar('%');
-                (*i)--;
-                *pCount += 1;
-                return;
-        }
+	for (curr_i = *i + 1; format[curr_i] != '\0'; curr_i++)
+	{
+		for (j = 0; FLAGS_CH[j] != '\0'; j++)
+			if (format[curr_i] == FLAGS_CH[j])
+			{
+				flags |= FLAGS_ARR[j];
+				break;
+			}
+
+		if (FLAGS_CH[j] == 0)
+			break;
+	}
+
+	*i = curr_i - 1;
+
+	return (flags);
 }
